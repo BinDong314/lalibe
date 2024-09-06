@@ -63,5 +63,10 @@ if (BUILD_HDF5)
    target_compile_definitions(lalibe PRIVATE BUILD_HDF5)
 endif ()
 
+
+if (BUILD_LQCDIO)
+   target_compile_definitions(lalibe PRIVATE BUILD_LQCDIO)
+endif ()
+
 # Install executable
 install(TARGETS lalibe DESTINATION bin)
