@@ -64,9 +64,11 @@ if (BUILD_HDF5)
 endif ()
 
 
-if (BUILD_LQCDIO)
-   target_compile_definitions(lalibe PRIVATE BUILD_LQCDIO)
-endif ()
+find_package(LQCDIO REQUIRED)
+if(LQCDIO_FOUND)
+    target_link_libraries(lalibe PRIVATE LQCDIO::LQCDIO)
+    target_compile_definitions(lalibe PRIVATE BUILD_LQCDIO)
+endif()
 
 # Install executable
 install(TARGETS lalibe DESTINATION bin)
