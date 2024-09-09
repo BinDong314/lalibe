@@ -77,7 +77,7 @@ if (BUILD_LQCDIO)
       message(FATAL_ERROR "we could not find LQCDIO_DIR: ${LQCDIO_DIR}")
     endif()
   endif()
-end if ()
+endif ()
 
 
 # Install executable
