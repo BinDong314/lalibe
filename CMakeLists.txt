@@ -9,6 +9,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/configuration)
 
 # Build Options
 option(BUILD_HDF5 "build with hdf5 reading/writing" OFF)
+option(BUILD_LQCDIO "build with LQCDIO reading/writing" OFF)
 
 set(Chroma_DIR ${CHROMA_ROOT})
 string(FIND ${CHROMA_ROOT} "cmake" CMAKE_BUILD)
@@ -64,17 +65,19 @@ if (BUILD_HDF5)
 endif ()
 
 
-if(NOT LQCDIO_DIR)
-  set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};${LQCDIO_DIR}")
-  find_package(LQCDIO REQUIRED)
-  if(LQCDIO_FOUND)
-    message("\nLQCDIO_DIR = ${LQCDIO_DIR}\n")
-    target_link_libraries(lalibe PRIVATE LQCDIO::LQCDIO)
-    target_compile_definitions(lalibe PRIVATE BUILD_LQCDIO)
-  else()
-    message(FATAL_ERROR "we could not find LQCDIO_DIR: ${LQCDIO_DIR}")
+if (BUILD_LQCDIO)
+  if(NOT LQCDIO_DIR)
+    set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};${LQCDIO_DIR}")
+    find_package(LQCDIO REQUIRED)
+    if(LQCDIO_FOUND)
+      message("\nLQCDIO_DIR = ${LQCDIO_DIR}\n")
+      target_link_libraries(lalibe PRIVATE LQCDIO::LQCDIO)
+      target_compile_definitions(lalibe PRIVATE BUILD_LQCDIO)
+    else()
+      message(FATAL_ERROR "we could not find LQCDIO_DIR: ${LQCDIO_DIR}")
+    endif()
   endif()
-endif()
+end if ()
 
 
 # Install executable
