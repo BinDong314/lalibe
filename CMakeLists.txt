@@ -64,11 +64,18 @@ if (BUILD_HDF5)
 endif ()
 
 
-find_package(LQCDIO REQUIRED)
-if(LQCDIO_FOUND)
+if(NOT LQCDIO_DIR)
+  set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};${LQCDIO_DIR}")
+  find_package(LQCDIO REQUIRED)
+  if(LQCDIO_FOUND)
+    message("\nLQCDIO_DIR = ${LQCDIO_DIR}\n")
     target_link_libraries(lalibe PRIVATE LQCDIO::LQCDIO)
     target_compile_definitions(lalibe PRIVATE BUILD_LQCDIO)
+  else()
+    message(FATAL_ERROR "we could not find LQCDIO_DIR: ${LQCDIO_DIR}")
+  endif()
 endif()
+
 
 # Install executable
 install(TARGETS lalibe DESTINATION bin)
