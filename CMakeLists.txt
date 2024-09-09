@@ -75,6 +75,8 @@ if (BUILD_LQCDIO)
     else()
       message(FATAL_ERROR "we could not find LQCDIO_DIR: ${LQCDIO_DIR}")
     endif()
+  else()
+      message(FATAL_ERROR "LQCDIO_DIR: ${LQCDIO_DIR} is empty")
   endif()
 endif ()
 
